@@ -1,0 +1,62 @@
+# For Gitlab CI to function, you must set the following Secret Variables in the
+# Gitlab project settings:
+#  S3_ACCESS_KEY
+#  S3_HOST
+#  S3_SECRET_KEY
+variables:
+  GITLAB_REPO_CI_DIR: "./ci"
+  GITLAB_ARTIFACTS_DIR: "artifacts"
+  S3_BUCKET: "hgi-software"
+
+# In general, additional variables should *not* be defined above unless they are 
+# required to process .gitlab-ci.yml itself (i.e. they are used in this file outside 
+# of the job scripts). 
+# 
+# To set or override a variable, create or edit a script in the before_scripts.d directory at 
+# either the repo level or in the hgi image creation subrepo. The contents of those 
+# two directories will be combined and the scripts sourced in "version" order (sort -V).
+before_script: 
+  - 'source "${GITLAB_REPO_CI_DIR}/source-before-scripts.sh" "${GITLAB_REPO_CI_DIR}/before_scripts.d"'
+
+stages:
+  - validate
+  - build
+  - deploy
+
+validate_s3: 
+  stage: validate
+  tags:
+   - docker
+  image: mercury/os3
+  script:
+    - "${GITLAB_REPO_CI_DIR}/validate-s3.sh"
+  only:
+    - master
+
+build_spark:
+  stage: build
+  tags:
+    - docker
+  image: mercury/spark-builder
+  script:
+    - "${GITLAB_REPO_CI_DIR}/build-spark-hadoop2.8.2-netlib-lgpl.sh"
+  environment:
+    SPARK_VERSION: 2.1.2
+    BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
+  artifacts:
+    paths:
+      - "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
+
+deploy_spark:
+  stage: deploy
+  tags:
+    - docker
+  image: mercury/os3
+  environment:
+    BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
+    DEPLOY_BASENAME: "spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl"
+    DEPLOY_EXT: .tgz
+  script:
+    - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"
+  dependencies:
+    - build_spark
