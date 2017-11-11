@@ -41,7 +41,7 @@ build_spark:
   script:
     - "${GITLAB_REPO_CI_DIR}/build-spark-hadoop2.8.2-netlib-lgpl.sh"
   environment:
-    SPARK_VERSION: 2.1.2
+    SPARK_VERSION: "2.1.2"
     BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
   artifacts:
     paths:
