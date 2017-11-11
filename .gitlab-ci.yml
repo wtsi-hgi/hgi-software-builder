@@ -55,8 +55,8 @@ deploy_spark:
   environment:
     BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
     DEPLOY_BASENAME: "spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl"
-    DEPLOY_EXT: .tgz
+    DEPLOY_EXT: ".tgz"
   script:
-    - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"
+    - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"'
   dependencies:
     - build_spark
