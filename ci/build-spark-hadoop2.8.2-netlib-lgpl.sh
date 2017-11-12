@@ -47,4 +47,4 @@ export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cl‌​i.trans
     -Dhadoop.version=2.8.2
 
 echo "copying spark-${SPARK_VERSION}-bin-hadoop2.8.2-netlib-lgpl.tgz to ${BUILD_ARTIFACT}"
-cp spark-${SPARK_VERSION}-bin-hadoop2.8.2-netlib-lgpl.tgz ${BUILD_ARTIFACT}
+cp "spark-${SPARK_VERSION}-bin-hadoop2.8.2-netlib-lgpl.tgz" "${CI_PROJECT_DIR}/${BUILD_ARTIFACT}"
