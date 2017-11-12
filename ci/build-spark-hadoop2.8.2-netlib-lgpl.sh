@@ -31,9 +31,11 @@ echo "Building spark"
 export R_HOME=/usr/lib/R
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export AMPLAB_JENKINS=1 # silence curl/wget progress output
+export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cl‌​i.transfer.Slf4jMave‌​nTransferListener=wa‌​rn"
 ./dev/make-distribution.sh \
     --name hadoop2.8.2-netlib-lgpl \
     --tgz \
+    -B \
     -Phadoop-2.7 \
     -Psparkr \
     -Phive \
