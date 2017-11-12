@@ -30,6 +30,7 @@ cd "${spark_srcdir}"
 echo "Building spark"
 export R_HOME=/usr/lib/R
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export AMPLAB_JENKINS=1 # silence curl/wget progress output
 ./dev/make-distribution.sh \
     --name hadoop2.8.2-netlib-lgpl \
     --tgz \
