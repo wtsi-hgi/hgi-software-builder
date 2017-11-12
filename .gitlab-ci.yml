@@ -21,7 +21,6 @@ before_script:
 stages:
   - validate
   - build
-  - deploy
 
 validate_s3: 
   stage: validate
@@ -38,25 +37,11 @@ build_spark:
   tags:
     - docker
   image: mercury/spark-builder
-  script:
+  scripts:
     - "${GITLAB_REPO_CI_DIR}/build-spark-hadoop2.8.2-netlib-lgpl.sh"
+    - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"'
   variables:
     SPARK_VERSION: "2.1.2"
     BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
-  artifacts:
-    paths:
-      - "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
-
-deploy_spark:
-  stage: deploy
-  tags:
-    - docker
-  image: mercury/os3
-  variables:
-    BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl.tgz"
     DEPLOY_BASENAME: "spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl"
     DEPLOY_EXT: ".tgz"
-  script:
-    - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"'
-  dependencies:
-    - build_spark
