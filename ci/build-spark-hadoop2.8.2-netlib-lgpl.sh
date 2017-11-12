@@ -13,7 +13,7 @@ if [[ ! ${!BUILD_ARTIFACT[@]} ]]; then
 fi
 
 spark_source_url_template="https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=spark/spark-{{ SPARK_VERSION }}/spark-{{ SPARK_VERSION }}.tgz"
-echo "Generating source url for version ${spark_version} from template ${spark_source_url_template}"
+echo "Generating source url for version ${SPARK_VERSION} from template ${spark_source_url_template}"
 spark_source_url=$(j2 <(echo "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=spark/spark-{{ SPARK_VERSION }}/spark-{{ SPARK_VERSION }}.tgz"))
 
 spark_tgz=$(basename "${spark_source_url}")
