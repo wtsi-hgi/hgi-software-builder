@@ -37,7 +37,7 @@ build_spark:
   tags:
     - docker
   image: mercury/spark-builder
-  scripts:
+  script:
     - "${GITLAB_REPO_CI_DIR}/build-spark-hadoop2.8.2-netlib-lgpl.sh"
     - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"'
   variables:
