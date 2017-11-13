@@ -27,3 +27,7 @@ echo "checking md5 of ${S3_BUCKET}/${DEPLOY_NAME}"
 mc cat deploy/${S3_BUCKET}/${DEPLOY_NAME} | md5sum -c "${DEPLOY_NAME}.md5"
 
 echo "Uploaded ${DEPLOY_NAME} to ${S3_BUCKET} with md5: $(cat ${DEPLOY_NAME}.md5)"
+
+echo "Uploading md5 file to bucket" 
+echo "md5:$(awk '{print $1}' ${DEPLOY_NAME}.md5)" | mc pipe deploy/${S3_BUCKET}/${DEPLOY_NAME}.md5
+
