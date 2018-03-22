@@ -46,7 +46,7 @@ build_spark_2_1_2:
     DEPLOY_BASENAME: "spark-2.1.2-bin-hadoop2.8.2-netlib-lgpl"
     DEPLOY_EXT: ".tgz"
 
-build_spark_2_2_1:
+build_spark_2_2_0:
   stage: build
   tags:
     - docker
@@ -55,7 +55,8 @@ build_spark_2_2_1:
     - "${GITLAB_REPO_CI_DIR}/build-spark-hadoop2.8.2-netlib-lgpl.sh"
     - '"${GITLAB_REPO_CI_DIR}/deploy-s3.sh"'
   variables:
-    SPARK_VERSION: "2.2.1"
-    BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.2.1-bin-hadoop2.8.2-netlib-lgpl.tgz"
-    DEPLOY_BASENAME: "spark-2.2.1-bin-hadoop2.8.2-netlib-lgpl"
+    SPARK_VERSION: "2.2.0"
+    BUILD_ARTIFACT: "${GITLAB_ARTIFACTS_DIR}/spark-2.2.0-bin-hadoop2.8.2-netlib-lgpl.tgz"
+    DEPLOY_BASENAME: "spark-2.2.0-bin-hadoop2.8.2-netlib-lgpl"
     DEPLOY_EXT: ".tgz"
+
